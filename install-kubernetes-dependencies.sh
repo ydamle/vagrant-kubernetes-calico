@@ -18,7 +18,7 @@ configure_hosts_file ()
 sudo tee /etc/hosts<<EOF
 172.16.8.10 master
 172.16.8.11 node-01
-172.16.8.12 node-02
+#172.16.8.12 node-02
 EOF
 }
 
@@ -67,8 +67,16 @@ sudo systemctl enable docker
 sed -i 's/plugins.cri.systemd_cgroup = false/plugins.cri.systemd_cgroup = true/' /etc/containerd/config.toml
 }
 
+install_apparmor()
+{
+	sudo apt install apparmor -y
+	sudo apt-get install apparmor-utils -y
+}
+
+
 install_required_packages
 configure_hosts_file
 disable_swap
 configure_sysctl
 install_docker_runtime
+install_apparmor
