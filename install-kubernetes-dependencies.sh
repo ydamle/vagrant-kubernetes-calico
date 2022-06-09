@@ -73,6 +73,24 @@ install_apparmor()
 	sudo apt-get install apparmor-utils -y
 }
 
+install_helm()
+{
+	curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+	chmod 700 get_helm.sh
+	./get_helm.sh
+
+}
+
+install_falco()
+{
+	curl -s https://falco.org/repo/falcosecurity-3672BA8F.asc | apt-key add -
+	echo "deb https://download.falco.org/packages/deb stable main" | tee -a /etc/apt/sources.list.d/falcosecurity.list
+	apt-get update -y
+	apt-get -y install linux-headers-$(uname -r)
+	apt-get install -y falco
+	systemctl start falco
+
+}
 
 install_required_packages
 configure_hosts_file
@@ -80,3 +98,6 @@ disable_swap
 configure_sysctl
 install_docker_runtime
 install_apparmor
+install_helm
+install_falco
+

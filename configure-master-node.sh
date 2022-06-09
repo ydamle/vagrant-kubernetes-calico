@@ -37,7 +37,15 @@ kubectl create -f https://projectcalico.docs.tigera.io/manifests/custom-resource
 
 }
 
+install_istio()
+{
+	sudo /usr/local/bin/helm repo add istio.io https://storage.googleapis.com/istio-release/releases/1.4.2/charts/
+	sudo /usr/local/bin/helm repo update
+	sudo /usr/local/bin/helm install istio-init istio.io/istio-init
+}
+
 initialize_master_node
 configure_kubectl
 install_network_cni
+install_istio
 create_join_command
