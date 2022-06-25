@@ -94,11 +94,15 @@ install_falco()
 
 install_trivy()
 {
-	sudo apt-get install wget apt-transport-https gnupg lsb-release -y
-	wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
-	echo deb https://aquasecurity.github.io/triv-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sourceslist.d/trivy.list
-	sudo apt-et y.gupdate
-	sudo apt-get install trivy -y
+	wget https://github.com/aquasecurity/trivy/releases/download/v0.18.3/trivy_0.18.3_Linux-64bit.deb
+	dpkg -i trivy_0.18.3_Linux-64bit.deb
+
+}
+
+install_tmux()
+{
+	apt-get update -y
+	apt-get install tmux -y
 }
 
 install_required_packages
@@ -109,4 +113,5 @@ install_docker_runtime
 install_apparmor
 install_helm
 install_falco
+install_tmux
 install_trivy
